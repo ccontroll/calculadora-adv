@@ -169,11 +169,36 @@
         background-color: #084298;
         color: white;
     }
+    @media print {
+        /* 1. Esconde tudo que não está dentro da div de impressão */
+        .ignorar > *:not(.conteudo-para-imprimir) {
+            display: none !important; /* Esconde todos os filhos diretos do body, exceto a div de impressão */
+        }
+
+        .conteudo-para-imprimir {
+            font-size: 10pt !important; /* Tamanho de fonte maior para impressão */
+            display: block !important;
+            width: 100% !important; /* Ocupa a largura total da página */
+            margin: 0 !important; /* Remove margens extras */
+            padding: 0 !important; /* Remove paddings extras */
+            position: static !important; /* Garante que não há posicionamento absoluto/fixo */
+        }
+        @page {
+            margin: 0.5in; /* Margens padrão para a página impressa */
+        }
+        body {
+            display: flex; /* Transforma o body em um container flexível */
+            flex-direction: column; /* Organiza os filhos em coluna (um abaixo do outro) */
+            align-items: center; /* Centraliza os itens horizontalmente dentro do container flex */
+            min-height: 100vh; /* Opcional: Garante que o body ocupe a altura total da viewport, útil para centralização vertical */
+            margin: 0; /* Remove margem padrão do body */
+        }
+    }
     </style>
     
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="ignorar">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg  bg-red-custom sticky-top">
         <div class="container">
@@ -229,7 +254,7 @@
     {% endif %}
 
     <!-- Main Content -->
-    <main class="container my-4">
+    <main class="container my-4 conteudo-para-imprimir">
         {% block content %}{% endblock %}
     </main>
 
