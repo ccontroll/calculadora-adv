@@ -1,0 +1,344 @@
+{% extends 'calculadora/base.html' %}
+
+{% load extras %}
+
+{% block title %}Resultados do Planejamento Tributário{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="text-primary mb-1">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Relatório Comparativo
+                </h2>
+                <p class="text-muted mb-0">
+                    Resultados para {{ usuario.nome }} - Receita Mensal: R$ {{ resultados.receita_mensal|floatformat:2 }}
+                </p>
+            </div>
+            <div>
+                {% if not historico %}
+                    <a href="{% url 'calculadora' %}" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-edit me-2"></i>Editar Dados
+                    </a>
+                {% endif %}
+                <a href="{% url 'nova_consulta' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Nova Consulta
+                </a>
+            </div>
+        </div>
+
+        <!-- Resumo dos Regimes -->
+        <div class="row g-4 mb-5">
+            <!-- Pessoa Física -->
+            <div class="col-lg-4">
+                <div class="card regime-card regime-pf h-100">
+                    <div class="card-header bg-success text-white text-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-user me-2"></i>
+                            Pessoa Física (Livro Caixa)
+                        </h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <div class="valor-destaque text-success">
+                                R$ {{ resultados.pessoa_fisica.total|floatformat:2 }}
+                            </div>
+                            <small class="text-muted">Total de Impostos</small>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-success percentual-badge">
+                                {{ resultados.pessoa_fisica.percentual|floatformat:2 }}% da receita
+                            </span>
+                        </div>
+                        
+                        <div class="text-start">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>INSS sobre Receita:</span>
+                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.inss_receita|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>INSS sobre Folha:</span>
+                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.inss_folha|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>IRRF sobre Livro Caixa:</span>
+                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.irrf|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>ISSQN:</span>
+                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.issqn|floatformat:2 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simples Nacional -->
+            <div class="col-lg-4">
+                <div class="card regime-card regime-sn h-100">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-building me-2"></i>
+                            Empresa no Simples Nacional (Anexo IV)
+                        </h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <div class="valor-destaque text-primary">
+                                R$ {{ resultados.simples_nacional.total|floatformat:2 }}
+                            </div>
+                            <small class="text-muted">Total de Impostos</small>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-primary percentual-badge">
+                                {{ resultados.simples_nacional.percentual|floatformat:2 }}% da receita
+                            </span>
+                        </div>
+                        
+                        <div class="text-start">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Guia do Simples Nacional:</span>
+                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.guia_simples|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>INSS sobre Folha:</span>
+                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.inss_folha|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>INSS sobre Pró-labore:</span>
+                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.inss_pro_labore|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>ISSQN:</span>
+                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.issqn|floatformat:2 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lucro Presumido -->
+            <div class="col-lg-4">
+                <div class="card regime-card regime-lp h-100">
+                    <div class="card-header bg-warning text-white text-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Empresa no Lucro Presumido
+                        </h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <div class="valor-destaque text-warning">
+                                R$ {{ resultados.lucro_presumido.total|floatformat:2 }}
+                            </div>
+                            <small class="text-muted">Total de Impostos</small>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-warning percentual-badge">
+                                {{ resultados.lucro_presumido.percentual|floatformat:2 }}% da receita
+                            </span>
+                        </div>
+                        
+                        <div class="text-start">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>PIS/COFINS:</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.pis_cofins|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>INSS sobre Folha:</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.inss_folha|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>INSS sobre Pró-labore:</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.inss_pro_labore|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>ISSQN:</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.issqn|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>IRPJ/CSLL:</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.irpj_csll|floatformat:2 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela Comparativa -->
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-table me-2"></i>
+                    Tabela Comparativa Detalhada
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Tributo</th>
+                                <th class="text-center">Pessoa Física (Livro Caixa)</th>
+                                <th class="text-center">Empresa no Simples Nacional (Anexo IV)</th>
+                                <th class="text-center">Empresa no Lucro Presumido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-semibold">Receita Mensal Média</td>
+                                <td class="text-center">R$ {{ resultados.receita_mensal|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.receita_mensal|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.receita_mensal|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Folha de pagamento</td>
+                                <td class="text-center">R$ {{ resultados.folha_pagamento|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.folha_pagamento|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.folha_pagamento|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Pró-labore Médio</td>
+                                <td class="text-center">R$ {{ resultados.pro_labore|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.pro_labore|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.pro_labore|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>INSS sobre Receita</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.inss_receita|floatformat:2 }}</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">-</td>
+                            </tr>
+                            <tr>
+                                <td>INSS sobre Folha de Pagamento</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.inss_folha|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.inss_folha|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.inss_folha|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>INSS sobre Pró-labore</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.inss_pro_labore|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.inss_pro_labore|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>IRRF sobre Livro Caixa</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.irrf|floatformat:2 }}</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">-</td>
+                            </tr>
+                            <tr>
+                                <td>Guia do Simples Nacional</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.guia_simples|floatformat:2 }}</td>
+                                <td class="text-center">-</td>
+                            </tr>
+                            <tr>
+                                <td>PIS/COFINS</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.pis_cofins|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>IRPJ/CSLL</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.irpj_csll|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>ISSQN</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.issqn|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.issqn|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.issqn|floatformat:2 }}</td>
+                            </tr>
+                            <tr class="table-warning fw-bold">
+                                <td>Total dos Impostos</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.total|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.total|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.total|floatformat:2 }}</td>
+                            </tr>
+                            <tr class="table-info fw-bold">
+                                <td>Percentual sobre a Receita</td>
+                                <td class="text-center">{{ resultados.pessoa_fisica.percentual|floatformat:2 }}%</td>
+                                <td class="text-center">{{ resultados.simples_nacional.percentual|floatformat:2 }}%</td>
+                                <td class="text-center">{{ resultados.lucro_presumido.percentual|floatformat:2 }}%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recomendação -->
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    Recomendação
+                </h5>
+            </div>
+            <div class="card-body">
+                {% with pf_total=resultados.pessoa_fisica.total sn_total=resultados.simples_nacional.total lp_total=resultados.lucro_presumido.total %}
+                    {% if pf_total <= sn_total and pf_total <= lp_total %}
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <i class="fas fa-trophy me-3 fs-4"></i>
+                            <div>
+                                <h6 class="alert-heading mb-1">Melhor opção: Pessoa Física (Livro Caixa)</h6>
+                                <p class="mb-0">
+                                    Com base nos valores informados, a atuação como Pessoa Física apresenta a menor carga tributária, 
+                                    representando uma economia de R$ {{ sn_total|sub:pf_total|floatformat:2 }} em relação ao Simples Nacional 
+                                    e R$ {{ lp_total|sub:pf_total|floatformat:2 }} em relação ao Lucro Presumido.
+                                </p>
+                            </div>
+                        </div>
+                    {% elif sn_total <= pf_total and sn_total <= lp_total %}
+                        <div class="alert alert-primary d-flex align-items-center" role="alert">
+                            <i class="fas fa-trophy me-3 fs-4"></i>
+                            <div>
+                                <h6 class="alert-heading mb-1">Melhor opção: Empresa no Simples Nacional (Anexo IV)</h6>
+                                <p class="mb-0">
+                                    Com base nos valores informados, a empresa no Simples Nacional apresenta a menor carga tributária, 
+                                    representando uma economia de R$ {{ pf_total|sub:sn_total|floatformat:2 }} em relação à Pessoa Física 
+                                    e R$ {{ lp_total|sub:sn_total|floatformat:2 }} em relação ao Lucro Presumido.
+                                </p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning d-flex align-items-center" role="alert">
+                            <i class="fas fa-trophy me-3 fs-4"></i>
+                            <div>
+                                <h6 class="alert-heading mb-1">Melhor opção: Empresa no Lucro Presumido</h6>
+                                <p class="mb-0">
+                                    Com base nos valores informados, a empresa no Lucro Presumido apresenta a menor carga tributária, 
+                                    representando uma economia de R$ {{ pf_total|sub:lp_total|floatformat:2 }} em relação à Pessoa Física 
+                                    e R$ {{ sn_total|sub:lp_total|floatformat:2 }} em relação ao Simples Nacional.
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <div class="mt-3">
+                    <p class="mb-2">
+                        <strong>Importante:</strong> Esta é uma simulação baseada nos dados informados. 
+                        Para uma análise mais detalhada e personalizada, recomendamos consultar nossa equipe de especialistas.
+                    </p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="{% url 'historico' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-history me-2"></i>Ver Histórico
+                        </a>
+                        <a href="{% url 'calculadora' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-edit me-2"></i>Nova Simulação
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

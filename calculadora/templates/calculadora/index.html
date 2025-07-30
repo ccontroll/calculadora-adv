@@ -1,0 +1,157 @@
+{% extends 'calculadora/base.html' %}
+
+{% load extras %}
+
+{% load static %}
+
+{% block title %}Bem-vindo ao Planejador Tributário{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <div class="mb-4">
+                <img src="{% static 'img/logo2.png' %}" alt="C-Controll Logo" class="img-fluid" style="max-width: 150px;">
+                {% comment %} <i class="fas fa-balance-scale text-primary" style="font-size: 4rem;"></i> {% endcomment %}
+            </div>
+            <h1 class="display-6 fw-bold text-dark mb-3">
+                Bem-vindo ao Planejador Tributário da C-Controll Contabilidade
+            </h1>
+            <p class="lead text-muted">
+                Desenvolvido especialmente para Advogados
+            </p>
+        </div>
+
+        <!-- Descrição -->
+        <div class="card mb-4">
+            <div class="card-body p-4">
+                <p class="mb-3">
+                    Este aplicativo foi criado para facilitar a análise comparativa entre as três principais opções de atuação tributária para profissionais do Direito:
+                </p>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center p-3 bg-success bg-opacity-10 rounded">
+                            <i class="fas fa-user text-success me-3 fs-4"></i>
+                            <div>
+                                <strong>Pessoa Física (IRPF)</strong>
+                                <br><small class="text-muted">com apuração via Livro Caixa</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center p-3 bg-primary bg-opacity-10 rounded">
+                            <i class="fas fa-building text-primary me-3 fs-4"></i>
+                            <div>
+                                <strong>Empresa no Simples Nacional</strong>
+                                <br><small class="text-muted">Anexo IV</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center p-3 bg-warning bg-opacity-10 rounded">
+                            <i class="fas fa-chart-line text-warning me-3 fs-4"></i>
+                            <div>
+                                <strong>Empresa no Lucro Presumido</strong>
+                                <br><small class="text-muted">Regime tradicional</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="mb-3">
+                    Nos campos abaixo, você poderá inserir algumas informações básicas e, com apenas alguns cliques, 
+                    visualizar uma estimativa dos tributos devidos em cada modalidade. Isso permitirá uma escolha mais 
+                    estratégica e segura sobre o melhor enquadramento tributário para sua realidade profissional.
+                </p>
+                
+                <div class="alert alert-info d-flex align-items-center" role="alert">
+                    <i class="fas fa-lightbulb me-3 fs-5"></i>
+                    <div>
+                        <strong>Importante:</strong> Caso tenha dúvidas durante o preenchimento, conte com o nosso suporte. 
+                        Estamos à disposição para ajudá-lo a aproveitar todo o potencial da ferramenta.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% if not usuario %}
+        
+        <!-- Formulário de Cadastro -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-user-plus me-2"></i>
+                    Cadastro para Acesso
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted mb-4">
+                    Para liberar o preenchimento da plataforma, precisamos de algumas informações básicas:
+                </p>
+                
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="{{ form.nome.id_for_label }}" class="form-label fw-semibold">
+                                <i class="fas fa-user me-2 text-primary"></i>
+                                Nome Completo *
+                            </label>
+                            {{ form.nome }}
+                            {% if form.nome.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.nome.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label for="{{ form.telefone.id_for_label }}" class="form-label fw-semibold">
+                                <i class="fas fa-phone me-2 text-primary"></i>
+                                Telefone *
+                            </label>
+                            {{ form.telefone }}
+                            {% if form.telefone.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.telefone.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-12">
+                            <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold">
+                                <i class="fas fa-envelope me-2 text-primary"></i>
+                                E-mail *
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.email.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-arrow-right me-2"></i>
+                            Prosseguir para o Planejamento Tributário
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,134 @@
+{% extends 'calculadora/base.html' %}
+
+{% load extras %}
+
+{% block title %}Histórico de Cálculos{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="text-primary mb-1">
+                    <i class="fas fa-history me-2"></i>
+                    Histórico de Cálculos
+                </h2>
+                <p class="text-muted mb-0">Consultas realizadas por {{ usuario.nome }}</p>
+            </div>
+            <div>
+                <a href="{% url 'calculadora' %}" class="btn btn-primary">
+                    <i class="fas fa-calculator me-2"></i>Nova Simulação
+                </a>
+            </div>
+        </div>
+
+        {% if calculos %}
+            <!-- Lista de Cálculos -->
+            <div class="row g-4">
+                {% for calculo in calculos %}
+                    <div class="col-lg-6">
+                        <div class="card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-0">
+                                        <i class="fas fa-file-alt me-2 text-primary"></i>
+                                        Cálculo #{{ calculo.id }}
+                                    </h6>
+                                    <small class="text-muted">
+                                        {{ calculo.data_calculo|date:"d/m/Y H:i" }}
+                                    </small>
+                                </div>
+                                <a href="{% url 'detalhe_calculo' calculo.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye me-1"></i>Ver Detalhes
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <div class="text-center p-2 bg-light rounded">
+                                            <div class="fw-bold text-primary">
+                                                R$ {{ calculo.receita_mensal|floatformat:2 }}
+                                            </div>
+                                            <small class="text-muted">Receita Mensal</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-center p-2 bg-light rounded">
+                                            <div class="fw-bold">
+                                                {% if calculo.issqn_fixo %}
+                                                    <span class="badge bg-success">ISSQN Fixo</span>
+                                                {% else %}
+                                                    {{ calculo.aliquota_issqn|floatformat:2 }}%
+                                                {% endif %}
+                                            </div>
+                                            <small class="text-muted">ISSQN</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <hr class="my-3">
+                                
+                                <div class="row g-2 text-sm">
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-between">
+                                            <span>Despesas Dedutíveis:</span>
+                                            <span class="fw-semibold">R$ {{ calculo.despesas_dedutiveis|floatformat:2 }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-between">
+                                            <span>Pró-labore:</span>
+                                            <span class="fw-semibold">R$ {{ calculo.pro_labore|floatformat:2 }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-between">
+                                            <span>Folha PF:</span>
+                                            <span class="fw-semibold">R$ {{ calculo.folha_pagamento_pf|floatformat:2 }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-between">
+                                            <span>Folha Empresa:</span>
+                                            <span class="fw-semibold">R$ {{ calculo.folha_pagamento_empresa|floatformat:2 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Paginação (se necessário) -->
+            {% if calculos|length == 10 %}
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Exibindo os 10 cálculos mais recentes
+                    </p>
+                </div>
+            {% endif %}
+
+        {% else %}
+            <!-- Estado vazio -->
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="fas fa-history text-muted" style="font-size: 4rem;"></i>
+                </div>
+                <h4 class="text-muted mb-3">Nenhum cálculo encontrado</h4>
+                <p class="text-muted mb-4">
+                    Você ainda não realizou nenhuma simulação tributária. 
+                    Que tal começar agora?
+                </p>
+                <a href="{% url 'calculadora' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-calculator me-2"></i>
+                    Fazer Primeira Simulação
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
