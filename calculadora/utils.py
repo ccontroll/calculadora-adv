@@ -91,7 +91,7 @@ def calcular_pessoa_fisica(receita, despesas, folha_pagamento, aliquota_issqn, i
     resultado['inss_receita'] = Decimal(str(float(receita) * 0.11)) if receita < 8157.41 else Decimal(str(8157.41 * 0.11))
     
     # INSS sobre Folha de Pagamento (23%)
-    resultado['inss_folha'] = (folha_pagamento * Decimal('0.23')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    resultado['inss_folha'] = (folha_pagamento * Decimal('0.255')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     # Base de cálculo do IRRF
     base_irrf = receita - despesas - folha_pagamento - (Decimal(str((float(folha_pagamento) * 0.08))))
@@ -119,12 +119,18 @@ def calcular_simples_nacional(receita, pro_labore, folha_pagamento, aliquota_iss
     aliquota_efetiva = calcular_simples_nacional_anexo_iv(receita)
     resultado['guia_simples'] = (receita * aliquota_efetiva).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
-    # INSS sobre Folha de Pagamento (26,5%)
-    resultado['inss_folha'] = ((folha_pagamento + pro_labore) * Decimal('0.20')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    # INSS sobre Folha de Pagamento (21,0%)
+    resultado['inss_folha'] = (folha_pagamento  * Decimal('0.21')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
-    # INSS sobre Pró-labore (20%)
+    # INSS patronal (21,0%)
+    resultado['inss_patronal'] = (pro_labore * Decimal('0.21')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+    # INSS sobre Pró-labore (11%)
     resultado['inss_pro_labore'] = (pro_labore * Decimal('0.11') if pro_labore < 8157.41 else Decimal(str(8157.41 * 0.11))).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
+    # Soma o INSS total prolabore
+    resultado['inss_total_prolabore'] = resultado['inss_patronal'] + resultado['inss_pro_labore']
+
     # ISSQN
     if issqn_fixo:
         resultado['issqn'] = Decimal('0')
@@ -132,7 +138,7 @@ def calcular_simples_nacional(receita, pro_labore, folha_pagamento, aliquota_iss
         resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn)/100))
 
     # Total
-    resultado['total'] = resultado['guia_simples'] + resultado['inss_folha'] + resultado['inss_pro_labore'] + resultado['issqn']
+    resultado['total'] = resultado['guia_simples'] + resultado['inss_folha'] + resultado['inss_patronal'] + resultado['inss_pro_labore'] + resultado['issqn']
     resultado['percentual'] = ((resultado['total'] / receita) * 100).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     return resultado
@@ -147,12 +153,18 @@ def calcular_lucro_presumido(receita, pro_labore, folha_pagamento, aliquota_issq
     # PIS/COFINS (3,65%)
     resultado['pis_cofins'] = (receita * Decimal('0.0365')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
-    # INSS sobre Folha de Pagamento (26,5%)
-    resultado['inss_folha'] = ((folha_pagamento + pro_labore) * Decimal('0.288')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    # INSS sobre Folha de Pagamento (26,8%)
+    resultado['inss_folha'] = (folha_pagamento  * Decimal('0.268')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
+    # INSS patronal (26,8%)
+    resultado['inss_patronal'] = (pro_labore * Decimal('0.268')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
     # INSS sobre Pró-labore (20%)
     resultado['inss_pro_labore'] = (pro_labore * Decimal('0.11') if pro_labore < 8157.41 else Decimal(str(8157.41 * 0.11))).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
+    # Soma o INSS total prolabore
+    resultado['inss_total_prolabore'] = resultado['inss_patronal'] + resultado['inss_pro_labore']
+
     # ISSQN
     if issqn_fixo:
         resultado['issqn'] = Decimal('0')
@@ -175,7 +187,7 @@ def calcular_lucro_presumido(receita, pro_labore, folha_pagamento, aliquota_issq
     resultado['irpj_csll'] = (irpj + csll + adicional_irpj).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     # Total
-    resultado['total'] = resultado['pis_cofins'] + resultado['inss_folha'] + resultado['inss_pro_labore'] + resultado['issqn'] + resultado['irpj_csll']
+    resultado['total'] = resultado['pis_cofins'] + resultado['inss_folha'] + resultado['inss_patronal'] + resultado['inss_pro_labore'] + resultado['issqn'] + resultado['irpj_csll']
     resultado['percentual'] = ((resultado['total'] / receita) * 100).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     return resultado

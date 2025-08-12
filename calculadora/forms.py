@@ -63,19 +63,19 @@ class CalculoTributarioForm(forms.ModelForm):
                 'class': 'form-control',
                 'step': '0.01',
                 'min': '0',
-                'placeholder': '2.500,00'
+                'placeholder': '3.000,00'
             }),
             'pro_labore': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'step': '0.01',
                 'min': '0',
-                'placeholder': '1.500,00'
+                'placeholder': '1.518,00'
             }),
             'folha_pagamento_empresa': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'step': '0.01',
                 'min': '0',
-                'placeholder': '2.500,00'
+                'placeholder': '3.000,00'
             }),
         }
 
