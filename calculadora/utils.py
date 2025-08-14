@@ -99,7 +99,7 @@ def calcular_pessoa_fisica(receita, despesas, folha_pagamento, aliquota_issqn, i
     
     # ISSQN
     resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn/100)))
-    
+
     # Total
     resultado['total'] = resultado['inss_receita'] + resultado['inss_folha'] + resultado['irrf'] + resultado['issqn']
     resultado['percentual'] = ((resultado['total'] / receita) * 100).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -173,10 +173,10 @@ def calcular_lucro_presumido(receita, pro_labore, folha_pagamento, aliquota_issq
     csll = base_presumida * Decimal('0.09')
     
     # IRPJ adicional (se receita trimestral > R$ 180.000)
-    receita_trimestral = receita * 3
-    if receita_trimestral > Decimal('180000'):
-        excedente = receita_trimestral - Decimal('180000')
-        adicional_irpj = (excedente * Decimal('0.10')) / 3
+    if base_presumida > Decimal('20000'):
+        excedente = base_presumida - Decimal('20000')
+        print(excedente)
+        adicional_irpj = (excedente * Decimal('0.10'))
     else:
         adicional_irpj = Decimal('0')
     
