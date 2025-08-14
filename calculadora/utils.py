@@ -98,10 +98,8 @@ def calcular_pessoa_fisica(receita, despesas, folha_pagamento, aliquota_issqn, i
     resultado['irrf'] = calcular_irrf_pessoa_fisica(base_irrf)
     
     # ISSQN
-    if not issqn_fixo:
-        resultado['issqn'] = Decimal('0')
-    else:
-        resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn/100)))
+    resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn/100)))
+    
     # Total
     resultado['total'] = resultado['inss_receita'] + resultado['inss_folha'] + resultado['irrf'] + resultado['issqn']
     resultado['percentual'] = ((resultado['total'] / receita) * 100).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -167,10 +165,7 @@ def calcular_lucro_presumido(receita, pro_labore, folha_pagamento, aliquota_issq
     resultado['inss_total_prolabore'] = resultado['inss_patronal'] + resultado['inss_pro_labore']
 
     # ISSQN
-    if not issqn_fixo:
-        resultado['issqn'] = Decimal('0')
-    else:
-        resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn if aliquota_issqn < 2 else aliquota_issqn/100)))
+    resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn if aliquota_issqn < 2 else aliquota_issqn/100)))
     
     # IRPJ/CSLL
     base_presumida = receita * Decimal('0.32')
