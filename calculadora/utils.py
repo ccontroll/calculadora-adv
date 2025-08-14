@@ -98,7 +98,7 @@ def calcular_pessoa_fisica(receita, despesas, folha_pagamento, aliquota_issqn, i
     resultado['irrf'] = calcular_irrf_pessoa_fisica(base_irrf)
     
     # ISSQN
-    if issqn_fixo:
+    if not issqn_fixo:
         resultado['issqn'] = Decimal('0')
     else:
         resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn/100)))
@@ -114,7 +114,11 @@ def calcular_simples_nacional(receita, pro_labore, folha_pagamento, aliquota_iss
     Calcula todos os tributos para Empresa no Simples Nacional Anexo IV
     """
     resultado = {}
-    
+    limite_receita_atingido = False
+    if receita >= Decimal('400000'):
+        limite_receita_atingido = True
+        
+    resultado['limite_receita_atingido'] = limite_receita_atingido
     # Guia do Simples Nacional
     aliquota_efetiva = calcular_simples_nacional_anexo_iv(receita)
     resultado['guia_simples'] = (receita * aliquota_efetiva).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -132,10 +136,7 @@ def calcular_simples_nacional(receita, pro_labore, folha_pagamento, aliquota_iss
     resultado['inss_total_prolabore'] = resultado['inss_patronal'] + resultado['inss_pro_labore']
 
     # ISSQN
-    if issqn_fixo:
-        resultado['issqn'] = Decimal('0')
-    else:
-        resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn)/100))
+    resultado['issqn'] = Decimal('0')
 
     # Total
     resultado['total'] = resultado['guia_simples'] + resultado['inss_folha'] + resultado['inss_patronal'] + resultado['inss_pro_labore'] + resultado['issqn']
@@ -166,7 +167,7 @@ def calcular_lucro_presumido(receita, pro_labore, folha_pagamento, aliquota_issq
     resultado['inss_total_prolabore'] = resultado['inss_patronal'] + resultado['inss_pro_labore']
 
     # ISSQN
-    if issqn_fixo:
+    if not issqn_fixo:
         resultado['issqn'] = Decimal('0')
     else:
         resultado['issqn'] = Decimal(str(float(receita) * float(aliquota_issqn if aliquota_issqn < 2 else aliquota_issqn/100)))

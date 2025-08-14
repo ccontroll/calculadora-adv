@@ -48,7 +48,7 @@
                                     <div class="col-6">
                                         <div class="text-center p-2 bg-light rounded">
                                             <div class="fw-bold text-primary">
-                                                R$ {{ calculo.receita_mensal|floatformat:2 }}
+                                                R$ {{ calculo.receita_mensal|currency }}
                                             </div>
                                             <small class="text-muted">Receita Mensal</small>
                                         </div>
@@ -59,7 +59,7 @@
                                                 {% if calculo.issqn_fixo %}
                                                     <span class="badge bg-success">ISSQN Fixo</span>
                                                 {% else %}
-                                                    {{ calculo.aliquota_issqn|floatformat:2 }}%
+                                                    {{ calculo.aliquota_issqn|currency }}%
                                                 {% endif %}
                                             </div>
                                             <small class="text-muted">ISSQN</small>
@@ -73,25 +73,25 @@
                                     <div class="col-12">
                                         <div class="d-flex justify-content-between">
                                             <span>Despesas Dedutíveis:</span>
-                                            <span class="fw-semibold">R$ {{ calculo.despesas_dedutiveis|floatformat:2 }}</span>
+                                            <span class="fw-semibold">R$ {{ calculo.despesas_dedutiveis|currency }}</span>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-flex justify-content-between">
                                             <span>Pró-labore:</span>
-                                            <span class="fw-semibold">R$ {{ calculo.pro_labore|floatformat:2 }}</span>
+                                            <span class="fw-semibold">R$ {{ calculo.pro_labore|currency }}</span>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-flex justify-content-between">
                                             <span>Folha PF:</span>
-                                            <span class="fw-semibold">R$ {{ calculo.folha_pagamento_pf|floatformat:2 }}</span>
+                                            <span class="fw-semibold">R$ {{ calculo.folha_pagamento_pf|currency }}</span>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-flex justify-content-between">
                                             <span>Folha Empresa:</span>
-                                            <span class="fw-semibold">R$ {{ calculo.folha_pagamento_empresa|floatformat:2 }}</span>
+                                            <span class="fw-semibold">R$ {{ calculo.folha_pagamento_empresa|currency }}</span>
                                         </div>
                                     </div>
                                 </div>

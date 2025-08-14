@@ -15,7 +15,7 @@
                     Relatório Comparativo
                 </h2>
                 <p class="text-muted mb-0">
-                    Resultados para {{ usuario.nome }} - Receita Mensal: R$ {{ resultados.receita_mensal|floatformat:2 }}
+                    Resultados para {{ usuario.nome }} - Receita Mensal: R$ {{ resultados.receita_mensal|currency }}
                 </p>
             </div>
             <div>
@@ -44,32 +44,32 @@
                     <div class="card-body text-center">
                         <div class="mb-3">
                             <div class="valor-destaque text-success">
-                                R$ {{ resultados.pessoa_fisica.total|floatformat:2 }}
+                                R$ {{ resultados.pessoa_fisica.total|currency }}
                             </div>
                             <small class="text-muted">Total de Impostos</small>
                         </div>
                         <div class="mb-3">
                             <span class="badge bg-success percentual-badge">
-                                {{ resultados.pessoa_fisica.percentual|floatformat:2 }}% da receita
+                                {{ resultados.pessoa_fisica.percentual|currency }}% da receita
                             </span>
                         </div>
                         
                         <div class="text-start">
                             <div class="d-flex justify-content-between mb-2">
                                 <span>INSS sobre Receita:</span>
-                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.inss_receita|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.inss_receita|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>INSS sobre Folha:</span>
-                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.inss_folha|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.inss_folha|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>IRRF sobre Livro Caixa:</span>
-                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.irrf|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.irrf|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>ISSQN:</span>
-                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.issqn|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.pessoa_fisica.issqn|currency }}</span>
                             </div>
                         </div>
                     </div>
@@ -88,32 +88,32 @@
                     <div class="card-body text-center">
                         <div class="mb-3">
                             <div class="valor-destaque text-primary">
-                                R$ {{ resultados.simples_nacional.total|floatformat:2 }}
+                                R$ {{ resultados.simples_nacional.total|currency }}
                             </div>
                             <small class="text-muted">Total de Impostos</small>
                         </div>
                         <div class="mb-3">
                             <span class="badge bg-primary percentual-badge">
-                                {{ resultados.simples_nacional.percentual|floatformat:2 }}% da receita
+                                {{ resultados.simples_nacional.percentual|currency }}% da receita
                             </span>
                         </div>
                         
                         <div class="text-start">
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Guia do Simples Nacional:</span>
-                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.guia_simples|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.guia_simples|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>INSS sobre Folha:</span>
-                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.inss_folha|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.inss_folha|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>INSS sobre Pró-labore:</span>
-                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.inss_pro_labore|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.inss_pro_labore|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>ISSQN:</span>
-                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.issqn|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.simples_nacional.issqn|currency }}</span>
                             </div>
                         </div>
                     </div>
@@ -132,36 +132,36 @@
                     <div class="card-body text-center">
                         <div class="mb-3">
                             <div class="valor-destaque text-warning">
-                                R$ {{ resultados.lucro_presumido.total|floatformat:2 }}
+                                R$ {{ resultados.lucro_presumido.total|currency }}
                             </div>
                             <small class="text-muted">Total de Impostos</small>
                         </div>
                         <div class="mb-3">
                             <span class="badge bg-warning percentual-badge">
-                                {{ resultados.lucro_presumido.percentual|floatformat:2 }}% da receita
+                                {{ resultados.lucro_presumido.percentual|currency }}% da receita
                             </span>
                         </div>
                         
                         <div class="text-start">
                             <div class="d-flex justify-content-between mb-2">
                                 <span>PIS/COFINS:</span>
-                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.pis_cofins|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.pis_cofins|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>INSS sobre Folha:</span>
-                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.inss_folha|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.inss_folha|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>INSS sobre Pró-labore:</span>
-                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.inss_pro_labore|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.inss_pro_labore|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>ISSQN:</span>
-                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.issqn|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.issqn|currency }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>IRPJ/CSLL:</span>
-                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.irpj_csll|floatformat:2 }}</span>
+                                <span class="fw-semibold">R$ {{ resultados.lucro_presumido.irpj_csll|currency }}</span>
                             </div>
                         </div>
                     </div>
@@ -191,81 +191,81 @@
                         <tbody>
                             <tr>
                                 <td class="fw-semibold">Receita Mensal Média</td>
-                                <td class="text-center">R$ {{ resultados.receita_mensal|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.receita_mensal|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.receita_mensal|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.receita_mensal|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.receita_mensal|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.receita_mensal|currency }}</td>
                             </tr>
                             <tr>
                                 <td class="fw-semibold">Folha de pagamento</td>
-                                <td class="text-center">R$ {{ resultados.folha_pagamento|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.folha_pagamento|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.folha_pagamento|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.folha_pagamento|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.folha_pagamento|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.folha_pagamento|currency }}</td>
                             </tr>
                             <tr>
                                 <td class="fw-semibold">Pró-labore Médio</td>
-                                <td class="text-center">R$ {{ resultados.pro_labore|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.pro_labore|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.pro_labore|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.pro_labore|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.pro_labore|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.pro_labore|currency }}</td>
                             </tr>
                             <tr>
                                 <td>INSS sobre Receita</td>
-                                <td class="text-center">R$ {{ resultados.pessoa_fisica.inss_receita|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.inss_receita|currency }}</td>
                                 <td class="text-center">-</td>
                                 <td class="text-center">-</td>
                             </tr>
                             <tr>
                                 <td>INSS sobre Folha de Pagamento</td>
-                                <td class="text-center">R$ {{ resultados.pessoa_fisica.inss_folha|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.simples_nacional.inss_folha|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.lucro_presumido.inss_folha|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.inss_folha|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.inss_folha|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.inss_folha|currency }}</td>
                             </tr>
                             <tr>
                                 <td>INSS sobre Pró-labore</td>
                                 <td class="text-center">-</td>
-                                <td class="text-center">R$ {{ resultados.simples_nacional.inss_pro_labore|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.lucro_presumido.inss_pro_labore|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.inss_pro_labore|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.inss_pro_labore|currency }}</td>
                             </tr>
                             <tr>
                                 <td>IRRF sobre Livro Caixa</td>
-                                <td class="text-center">R$ {{ resultados.pessoa_fisica.irrf|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.irrf|currency }}</td>
                                 <td class="text-center">-</td>
                                 <td class="text-center">-</td>
                             </tr>
                             <tr>
                                 <td>Guia do Simples Nacional</td>
                                 <td class="text-center">-</td>
-                                <td class="text-center">R$ {{ resultados.simples_nacional.guia_simples|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.guia_simples|currency }}</td>
                                 <td class="text-center">-</td>
                             </tr>
                             <tr>
                                 <td>PIS/COFINS</td>
                                 <td class="text-center">-</td>
                                 <td class="text-center">-</td>
-                                <td class="text-center">R$ {{ resultados.lucro_presumido.pis_cofins|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.pis_cofins|currency }}</td>
                             </tr>
                             <tr>
                                 <td>IRPJ/CSLL</td>
                                 <td class="text-center">-</td>
                                 <td class="text-center">-</td>
-                                <td class="text-center">R$ {{ resultados.lucro_presumido.irpj_csll|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.irpj_csll|currency }}</td>
                             </tr>
                             <tr>
                                 <td>ISSQN</td>
-                                <td class="text-center">R$ {{ resultados.pessoa_fisica.issqn|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.simples_nacional.issqn|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.lucro_presumido.issqn|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.issqn|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.issqn|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.issqn|currency }}</td>
                             </tr>
                             <tr class="table-warning fw-bold">
                                 <td>Total dos Impostos</td>
-                                <td class="text-center">R$ {{ resultados.pessoa_fisica.total|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.simples_nacional.total|floatformat:2 }}</td>
-                                <td class="text-center">R$ {{ resultados.lucro_presumido.total|floatformat:2 }}</td>
+                                <td class="text-center">R$ {{ resultados.pessoa_fisica.total|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.simples_nacional.total|currency }}</td>
+                                <td class="text-center">R$ {{ resultados.lucro_presumido.total|currency }}</td>
                             </tr>
                             <tr class="table-info fw-bold">
                                 <td>Percentual sobre a Receita</td>
-                                <td class="text-center">{{ resultados.pessoa_fisica.percentual|floatformat:2 }}%</td>
-                                <td class="text-center">{{ resultados.simples_nacional.percentual|floatformat:2 }}%</td>
-                                <td class="text-center">{{ resultados.lucro_presumido.percentual|floatformat:2 }}%</td>
+                                <td class="text-center">{{ resultados.pessoa_fisica.percentual|currency }}%</td>
+                                <td class="text-center">{{ resultados.simples_nacional.percentual|currency }}%</td>
+                                <td class="text-center">{{ resultados.lucro_presumido.percentual|currency }}%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -290,8 +290,8 @@
                                 <h6 class="alert-heading mb-1">Melhor opção: Pessoa Física (Livro Caixa)</h6>
                                 <p class="mb-0">
                                     Com base nos valores informados, a atuação como Pessoa Física apresenta a menor carga tributária, 
-                                    representando uma economia de R$ {{ sn_total|sub:pf_total|floatformat:2 }} em relação ao Simples Nacional 
-                                    e R$ {{ lp_total|sub:pf_total|floatformat:2 }} em relação ao Lucro Presumido.
+                                    representando uma economia de R$ {{ sn_total|sub:pf_total|currency }} em relação ao Simples Nacional 
+                                    e R$ {{ lp_total|sub:pf_total|currency }} em relação ao Lucro Presumido.
                                 </p>
                             </div>
                         </div>
@@ -302,8 +302,8 @@
                                 <h6 class="alert-heading mb-1">Melhor opção: Empresa no Simples Nacional (Anexo IV)</h6>
                                 <p class="mb-0">
                                     Com base nos valores informados, a empresa no Simples Nacional apresenta a menor carga tributária, 
-                                    representando uma economia de R$ {{ pf_total|sub:sn_total|floatformat:2 }} em relação à Pessoa Física 
-                                    e R$ {{ lp_total|sub:sn_total|floatformat:2 }} em relação ao Lucro Presumido.
+                                    representando uma economia de R$ {{ pf_total|sub:sn_total|currency }} em relação à Pessoa Física 
+                                    e R$ {{ lp_total|sub:sn_total|currency }} em relação ao Lucro Presumido.
                                 </p>
                             </div>
                         </div>
@@ -314,8 +314,8 @@
                                 <h6 class="alert-heading mb-1">Melhor opção: Empresa no Lucro Presumido</h6>
                                 <p class="mb-0">
                                     Com base nos valores informados, a empresa no Lucro Presumido apresenta a menor carga tributária, 
-                                    representando uma economia de R$ {{ pf_total|sub:lp_total|floatformat:2 }} em relação à Pessoa Física 
-                                    e R$ {{ sn_total|sub:lp_total|floatformat:2 }} em relação ao Simples Nacional.
+                                    representando uma economia de R$ {{ pf_total|sub:lp_total|currency }} em relação à Pessoa Física 
+                                    e R$ {{ sn_total|sub:lp_total|currency }} em relação ao Simples Nacional.
                                 </p>
                             </div>
                         </div>

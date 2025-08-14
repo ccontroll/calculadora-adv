@@ -57,7 +57,7 @@ class CalculoTributarioForm(forms.ModelForm):
                 'class': 'form-control',
                 'step': '0.01',
                 'min': '0',
-                'placeholder': '15.025,00'
+                'placeholder': '15.000,00'
             }),
             'folha_pagamento_pf': forms.NumberInput(attrs={
                 'class': 'form-control',

@@ -39,7 +39,7 @@ class CalculoTributario(models.Model):
     despesas_dedutiveis = models.DecimalField(
         max_digits=12, 
         decimal_places=2,
-        default=Decimal('15025.00'),
+        default=Decimal('10000.00'),
         validators=[MinValueValidator(Decimal('0'))],
         verbose_name="Despesas Dedutíveis (Pessoa Física)"
     )
@@ -55,7 +55,7 @@ class CalculoTributario(models.Model):
     pro_labore = models.DecimalField(
         max_digits=12, 
         decimal_places=2,
-        default=Decimal('1500.00'),
+        default=Decimal('1518.00'),
         validators=[MinValueValidator(Decimal('0'))],
         verbose_name="Pró-labore Registrado"
     )

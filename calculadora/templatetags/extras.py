@@ -9,3 +9,13 @@ def sub(value, arg):
         return float(value) - float(arg)
     except (ValueError, TypeError):
         return ""
+    
+@register.filter(name="currency")
+def currency(value):
+    """
+    Converte um valor numérico para uma string formatada como moeda brasileira (R$)
+    """
+    a = '{:,.2f}'.format(float(value))
+    b = a.replace(',','v')
+    c = b.replace('.',',')
+    return c.replace('v','.')
